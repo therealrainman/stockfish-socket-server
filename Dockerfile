@@ -17,6 +17,7 @@ COPY . .
 RUN pip3 install --upgrade pip && \
     pip3 install --no-cache-dir -r requirements.txt
 
-# change ENTRYPOINT to bash shell
-ENTRYPOINT ["/bin/sh", "-c"]
-CMD ["/bin/bash"]
+# Open ports and start server
+EXPOSE 5000
+ENTRYPOINT ["/bin/bash"]
+CMD ["start_server.sh"]
