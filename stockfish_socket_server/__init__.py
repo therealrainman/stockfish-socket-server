@@ -7,7 +7,6 @@ socket = Sock(app)
 
 @socket.route('/senduci')
 def process_uci(ws):
-    print('User connected!')
     stockfish_socket_emitter = StockfishSocketEmitter(
         stockfish_path=app.config.get('stockfish_path')
     )
@@ -15,7 +14,6 @@ def process_uci(ws):
     while True:
         text = ws.receive()
         if text == 'quit':
-            print('Quit command received, exiting')
             stockfish_socket_emitter.stop()
         else:
             stockfish_socket_emitter.send_uci(text)
