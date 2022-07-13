@@ -6,8 +6,6 @@ def create_app(stockfish_path, debug_mode=False):
     app.config['DEBUG'] = debug_mode
     app.config['stockfish_path'] = stockfish_path
 
-    print(f"Stockfish path: {stockfish_path}")
-
     return app
 
 if __name__ == '__main__':

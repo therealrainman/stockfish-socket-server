@@ -20,9 +20,9 @@ class StockfishSocketEmitter:
             if self.stockfish_process.poll() is not None:
                 raise RuntimeError('No Stockfish process running')
             stockfish_stdout = self.stockfish_process.stdout.readline().strip()
-            print(stockfish_stdout)
             ws.send(stockfish_stdout)
-        print('Stopping Stockfish emitter thread...')
+        ws.send('Quit command received, exiting...')
+        ws.close(message='quit_command_received')
 
     def start(self, ws):
         if not self.stockfish_process:
@@ -43,7 +43,6 @@ class StockfishSocketEmitter:
 
     def stop(self):
         if self.stockfish_process.poll() is None:
-            print('Terminating Stockfish process...')
             self.stop_signal.set()
             self.send_uci('quit')
             self.stockfish_process.kill()
