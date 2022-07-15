@@ -20,4 +20,4 @@ RUN pip3 install --upgrade pip && \
 # Open ports and start server
 EXPOSE 5000
 ENTRYPOINT ["/bin/bash"]
-CMD ["start_server.sh"]
+# CMD ["start_server.sh"]
