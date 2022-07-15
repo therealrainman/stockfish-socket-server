@@ -1,13 +1,27 @@
 import subprocess
+from pathlib import Path
 from threading import Thread, Event
 
 
 class StockfishSocketEmitter:
     def __init__(self, stockfish_path):
+        if not Path(stockfish_path).exists():
+            raise ValueError(f'No executable found at: {stockfish_path}')
+
         self.stockfish_path = stockfish_path
         self.stockfish_process = None
         self.emitter_thread = None
         self.stop_signal = Event()
+
+    def _create_stockfish_process(self):
+        if not self.stockfish_process:
+            self.stockfish_process = subprocess.Popen(
+                self.stockfish_path,
+                universal_newlines=True,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE
+            )
 
     def send_uci(self, command):
         self.stockfish_process.stdin.write(f'{command}\n')
@@ -25,15 +39,7 @@ class StockfishSocketEmitter:
         ws.close(message='quit_command_received')
 
     def start(self, ws):
-        if not self.stockfish_process:
-            self.stockfish_process = subprocess.Popen(
-                self.stockfish_path,
-                universal_newlines=True,
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
-            )
-
+        self._create_stockfish_process()
         self.emitter_thread = Thread(
             target=self.emit_stockfish_stdout,
             args=(ws, self.stop_signal)

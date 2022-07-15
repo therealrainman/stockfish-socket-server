@@ -11,6 +11,7 @@ RUN wget https://github.com/official-stockfish/Stockfish/archive/refs/tags/sf_15
     cp stockfish /usr/local/bin/stockfish
 
 WORKDIR /stockfish-socket-server
+ENV PYTHONPATH=/stockfish-socket-server
 COPY . .
 
 # install dependencies
