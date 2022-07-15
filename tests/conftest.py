@@ -1,7 +1,7 @@
 import pytest
-import websockets
 from threading import Thread
 from run import create_app
+
 
 @pytest.fixture
 def app_instance():
