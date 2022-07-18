@@ -23,4 +23,4 @@ RUN pip3 install --upgrade pip && \
 
 # Expose port 5000 and override entrypoint
 EXPOSE 5000
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-l", "-c"]
