@@ -8,11 +8,18 @@ on:
     branches:
       - "main"
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: stockfish-socket-server
+
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       -
@@ -24,7 +31,17 @@ jobs:
         continue-on-error: true
       -
         name: Build image
-        run: docker build . --file Dockerfile --tag stockfish-socket-server:latest
+        run: docker build . --file Dockerfile --tag ${IMAGE_NAME}:latest
       -
         name: Test image
-        run: docker run --rm stockfish-socket-server:latest pytest
+        run: docker run --rm ${IMAGE_NAME}:latest pytest
+      -
+        name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      -
+        name: Push image
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:latest
+          echo IMAGE_ID=$IMAGE_ID
+          docker tag ${IMAGE_NAME} ${IMAGE_ID}:latest
+          docker push ${IMAGE_ID}:latest
