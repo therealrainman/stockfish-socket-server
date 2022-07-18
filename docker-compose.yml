@@ -1,11 +1,8 @@
 version: '3'
 
 services:
-  stockfishsocketserver:
-    image: stockfish-socket-server
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+  stockfish-socket-server:
+    image: ghcr.io/x64squares/stockfish-socket-server
     ports:
       - 5000:5000
     entrypoint: /bin/bash
