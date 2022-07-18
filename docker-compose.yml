@@ -8,4 +8,5 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 5000:5000
+    entrypoint: /bin/bash
     command: /stockfish-socket-server/start_server.sh
