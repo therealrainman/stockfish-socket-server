@@ -1,0 +1,49 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: stockfish-socket-server
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      -
+        name: Checkout code
+        uses: actions/checkout@v3
+      -
+        name: Use docker layer caching
+        uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+      -
+        name: Build image
+        run: docker build . --file Dockerfile --tag ${IMAGE_NAME}:latest
+      -
+        name: Test image
+        run: docker run --rm ${IMAGE_NAME}:latest pytest
+      -
+        name: Log in to registry
+        if: github.event_name != 'pull_request'
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      -
+        name: Push image
+        if: github.event_name != 'pull_request'
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}
+          echo IMAGE_ID=$IMAGE_ID
+          docker tag ${IMAGE_NAME} ${IMAGE_ID}:latest
+          docker push ${IMAGE_ID}:latest
