@@ -39,3 +39,4 @@ def test_server_connect(app_instance):
 
     # Disconnect client
     ws.close()
+    app_instance.join(timeout=1)
