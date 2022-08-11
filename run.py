@@ -3,6 +3,12 @@ from pathlib import Path
 from stockfish_socket_server import app
 
 def create_app(stockfish_path, debug_mode=False):
+    """
+    Create the server Flask instance.
+    :param stockfish_path: Path to the stockfish binary
+    :param debug_mode: Boolean to enable Flask debug mode
+    :return: Flask app instance
+    """
     app.config['DEBUG'] = debug_mode
     app.config['stockfish_path'] = stockfish_path
 

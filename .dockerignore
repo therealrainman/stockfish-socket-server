@@ -1,10 +1,5 @@
-**/.git
-**/.github
-**/.gitignore
-**/.vscode
-**/.editorconfig
+**/.*
 **/*venv*
 **/__pycache__
-**/.dockerignore
 **/Dockerfile
 **/docker-compose*
