@@ -7,6 +7,11 @@ socket = Sock(app)
 
 @socket.route('/senduci')
 def process_uci(ws):
+    """
+    Route for sending and handling uci engine commands
+    :param ws: Websocket connection
+    :return: None
+    """
     stockfish_socket_emitter = StockfishSocketEmitter(
         stockfish_path=app.config.get('stockfish_path')
     )
