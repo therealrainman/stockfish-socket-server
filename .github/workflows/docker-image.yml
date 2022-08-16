@@ -52,7 +52,7 @@ jobs:
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}
           echo IMAGE_ID=$IMAGE_ID
-          docker tag ${IMAGE_NAME} ${IMAGE_ID}:${IMAGE_TAG}
+          docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_ID}:${IMAGE_TAG}
           docker push ${IMAGE_ID}:${IMAGE_TAG}
 
   build-fairy-sf:
@@ -93,5 +93,5 @@ jobs:
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}
           echo IMAGE_ID=$IMAGE_ID
-          docker tag ${IMAGE_NAME} ${IMAGE_ID}:${IMAGE_TAG}
+          docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_ID}:${IMAGE_TAG}
           docker push ${IMAGE_ID}:${IMAGE_TAG}
