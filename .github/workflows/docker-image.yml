@@ -14,7 +14,7 @@ env:
 
 jobs:
 
-  build-sf-official: &build-sf-official
+  build-sf-official:
 
     runs-on: ubuntu-latest
     env:
@@ -56,7 +56,42 @@ jobs:
           docker push ${IMAGE_ID}:${IMAGE_TAG}
 
   build-fairy-sf:
-    <<: *build-sf-official
+
+    runs-on: ubuntu-latest
     env:
       STOCKFISH_BIN_URL: "https://github.com/ianfab/Fairy-Stockfish/releases/download/fairy_sf_14/fairy-stockfish_x86-64-bmi2"
       IMAGE_TAG: fsf-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      -
+        name: Checkout code
+        uses: actions/checkout@v3
+      -
+        name: Use docker layer caching
+        uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+      -
+        name: Build image
+        run: >
+          docker build .
+          --build-arg STOCKFISH_BIN_URL=${STOCKFISH_BIN_URL}
+          --file Dockerfile
+          --tag ${IMAGE_NAME}:${IMAGE_TAG}
+      -
+        name: Test image
+        run: docker run --rm ${IMAGE_NAME}:${IMAGE_TAG} pytest
+      -
+        name: Log in to registry
+        if: github.event_name != 'pull_request'
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      -
+        name: Push image
+        if: github.event_name != 'pull_request'
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}
+          echo IMAGE_ID=$IMAGE_ID
+          docker tag ${IMAGE_NAME} ${IMAGE_ID}:${IMAGE_TAG}
+          docker push ${IMAGE_ID}:${IMAGE_TAG}
