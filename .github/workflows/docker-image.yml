@@ -44,11 +44,11 @@ jobs:
         run: docker run --rm ${IMAGE_NAME}:${IMAGE_TAG} pytest
       -
         name: Log in to registry
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
       -
         name: Push image
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}
           echo IMAGE_ID=$IMAGE_ID
@@ -85,11 +85,11 @@ jobs:
         run: docker run --rm ${IMAGE_NAME}:${IMAGE_TAG} pytest
       -
         name: Log in to registry
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
       -
         name: Push image
-        # if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request'
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}
           echo IMAGE_ID=$IMAGE_ID
