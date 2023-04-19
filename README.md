@@ -13,7 +13,7 @@ Or running manually:
 $ docker run \
     -d -p 5000:5000 \
     --entrypoint=/bin/bash \
-    ghcr.io/x64squares/stockfish-socket-server \
+    ghcr.io/x64squared/stockfish-socket-server \
     /stockfish-socket-server/start_server.sh
 ```
 
@@ -37,7 +37,7 @@ $ gunicorn \
 
 ## Connecting to the server
 
-[stockfish-socket-client](https://github.com/x64squares/stockfish-socket-client) can be used to connect to the server; an example of using the client in command line mode:
+[stockfish-socket-client](https://github.com/x64squared/stockfish-socket-client) can be used to connect to the server; an example of using the client in command line mode:
 
 ```
 $ stockfish-socket-client
@@ -55,4 +55,4 @@ info depth 5 seldepth 5 multipv 1 score cp 75 nodes 1308 nps 436000 tbhits 0 tim
 bestmove g1f3 ponder g8f6
 ```
 
- The client runs exactly like a local instance of stockfish, and therefore integrates with any UCI-compatible chess GUI program. More usage information can be found in the [client README file](https://github.com/x64squares/stockfish-socket-client/blob/main/README.md).
+ The client runs exactly like a local instance of stockfish, and therefore integrates with any UCI-compatible chess GUI program. More usage information can be found in the [client README file](https://github.com/x64squared/stockfish-socket-client/blob/main/README.md).
