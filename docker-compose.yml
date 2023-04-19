@@ -2,7 +2,7 @@ version: '3'
 
 services:
   stockfish-socket-server:
-    image: ghcr.io/x64squares/stockfish-socket-server
+    image: ghcr.io/x64squared/stockfish-socket-server
     ports:
       - 5000:5000
     entrypoint: /bin/bash

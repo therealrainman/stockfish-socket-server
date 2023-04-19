@@ -2,8 +2,8 @@ name: Build and Test
 
 on:
   push:
-    branches:
-      - "main"
+    tags:
+      - '*'
   pull_request:
     branches:
       - "main"
@@ -28,10 +28,6 @@ jobs:
       -
         name: Checkout code
         uses: actions/checkout@v3
-      -
-        name: Use docker layer caching
-        uses: satackey/action-docker-layer-caching@v0.0.11
-        continue-on-error: true
       -
         name: Build image
         run: >
@@ -69,10 +65,6 @@ jobs:
       -
         name: Checkout code
         uses: actions/checkout@v3
-      -
-        name: Use docker layer caching
-        uses: satackey/action-docker-layer-caching@v0.0.11
-        continue-on-error: true
       -
         name: Build image
         run: >
