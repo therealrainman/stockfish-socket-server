@@ -37,11 +37,26 @@ $ gunicorn \
 
 ## Connecting to the server
 
+### Connect with `wscat`
+
+To quickly test the server connection with [wscat](https://github.com/websockets/wscat):
+
+```bash
+$ wscat --connect ws://127.0.0.1:5000/senduci
+Connected (press CTRL+C to quit)
+< Stockfish 16.1 by the Stockfish developers (see AUTHORS file)
+> isready
+< readyok
+>
+```
+
+### Connect with `stockfish-socket-client`
+
 [stockfish-socket-client](https://github.com/x64squared/stockfish-socket-client) can be used to connect to the server; an example of using the client in command line mode:
 
-```
+```bash
 $ stockfish-socket-client
-Stockfish 15 by the Stockfish developers (see AUTHORS file)
+Stockfish 16.1 by the Stockfish developers (see AUTHORS file)
 isready
 readyok
 position startpos moves e2e4 e7e5
